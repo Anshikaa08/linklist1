@@ -1,0 +1,198 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node *link;
+}*p;
+//addbeg function
+void addbeg()
+{
+	struct node *temp;
+	int d;
+	scanf("%d",&d);
+	if (p==NULL)
+	{
+		p=(struct node*)malloc(sizeof(struct node));
+		p->data=d;
+		p->link=NULL;
+	}
+	else
+	{
+		struct node *temp=(struct node*)malloc(sizeof(struct node));
+		temp->data=d;
+		temp->link=p;
+		p=temp;
+	}
+}
+//addend function
+void addend()
+{
+	int d;
+	scanf("%d",&d);
+	struct node *temp;
+	if(p==NULL)
+	{
+		p=(struct node *)malloc(sizeof(struct node));
+		p->data=d;
+		p->link=NULL;
+	}
+	else
+	{
+		struct node *next,*temp;
+		next=(struct node *)malloc(sizeof(struct node));
+		temp=p;
+		while(temp->link!=NULL)
+		{
+		temp=temp->link;
+	}
+		next->data=d;
+		next->link=NULL;
+		temp->link=next;
+	}
+}
+//insert at perticular position
+void perpos(int data,int pos)
+{
+	int c=0;
+	struct node*s;
+	struct node*temp=(struct node*)malloc(sizeof(struct node));
+	s=p;
+	while(c!=pos-1)
+	{
+		c++;
+		s=s->link;
+	}
+	temp->data=data;
+	temp->link=s->link;
+	s->link=temp;
+}
+//delbeg
+void delbeg()
+{
+	if(p==NULL)
+	{
+		printf("LINKED LIST DOES NOT EXIST");
+	}
+	else
+	{
+		struct node *ptr;
+		ptr=(struct node *)malloc(sizeof(struct node));
+		ptr=p;
+		p=p->link;
+		free(ptr);
+			}
+}
+//delend function
+void delend()
+{
+	struct node *s;
+	s=(struct node *)malloc(sizeof(struct node));
+	if(p==NULL)
+	{
+		printf("list doesnot exist");
+	}
+	else
+	{
+		s=p;
+		struct node *prev;
+		prev=(struct node *)malloc(sizeof(struct node));
+		while(s->link!=NULL){
+			prev=s;
+			s=s->link;
+		}
+		prev->link=NULL;
+		free(s);
+	}
+}
+//delete at position
+void del_pos(int d)
+{
+	struct node *s=(struct node *)malloc(sizeof(struct node));
+	struct node *temp=(struct node *)malloc(sizeof(struct node));
+	p=s;
+	while(s->link->link->data!=d)
+	{
+		s=s->link;
+	}
+	temp=s->link;
+	s->link=s->link->link;
+	free(temp);
+}
+//finding middle data of linkedlist
+void middle()
+{
+	int c=0;
+	struct node*s=(struct node*)malloc(sizeof(struct node));
+	s=p;
+	while(s!=NULL)
+	{
+		c++;
+		s=s->link;
+	}
+	int mid=c/2;
+	if(c&1==0)
+	{
+		mid-=1;
+	}
+	s=p;
+	while(mid>0)
+	{
+		s=s->link;
+		mid-=1;
+	}
+	printf("%d\n",s->data);
+}
+//using two pointers(mid of linkedlist)
+void mid_two_point()
+{
+	struct node*A,*B;
+	A=p;
+	B=p;
+	while(B!=NULL&&B->link!=NULL&&B->link->link!=NULL)
+	{
+		A=A->link;
+		B=B->link->link;
+	}
+	printf("%d\n",A->data);
+}
+//print function
+void print()
+{
+	struct node *temp;
+	temp=p;
+	while(temp!=NULL)
+	{
+		printf("%d\n",temp->data);
+		temp=temp->link;
+	}
+}
+void main()
+{
+	printf("Enter the data for addbeg three times\n");
+	addbeg();
+	addbeg();
+	addbeg();
+	print();
+	printf("enter the values for addend function\n");
+	addend();
+	print();
+	printf("enter the value for adding at perticular position\n");
+	int pos,data;
+	printf("enter the value of pos\n");
+	scanf("%d",&pos);
+	printf("enter the value of data\n");
+	scanf("%d",&data);
+	perpos(data,pos);
+	print();
+	printf("Deletion at beginning\n");
+	delbeg();
+	print();
+	printf("deletion at end\n");
+	delend();
+	print();
+	printf("middle of the linkedlist is:\n");
+	middle();
+	printf("middle of ll through double pointer\n");
+	mid_two_point();
+	printf("end of the program\n");
+}
